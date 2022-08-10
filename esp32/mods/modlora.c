@@ -2357,6 +2357,15 @@ STATIC mp_obj_t lora_ischannel_free(mp_obj_t self_in, mp_obj_t rssi, mp_obj_t ti
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_3(lora_ischannel_free_obj, lora_ischannel_free);
 
+STATIC mp_obj_t lora_signal_strength(mp_obj_t self_in) {
+    // lora_obj_t *self = self_in;
+
+    // returns current rssi value
+    int lora_rssi = Radio.Rssi(MODEM_LORA);
+    return mp_obj_new_int(lora_rssi);
+}
+STATIC MP_DEFINE_CONST_FUN_OBJ_1(lora_signal_strength_obj, lora_signal_strength);
+
 STATIC mp_obj_t lora_set_battery_level(mp_obj_t self_in, mp_obj_t battery) {
     BoardSetBatteryLevel(mp_obj_get_int(battery));
     return mp_const_none;
@@ -2479,6 +2488,7 @@ STATIC const mp_map_elem_t lora_locals_dict_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR_callback),              (mp_obj_t)&lora_callback_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_events),                (mp_obj_t)&lora_events_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_ischannel_free),        (mp_obj_t)&lora_ischannel_free_obj },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_signal_strength),       (mp_obj_t)&lora_signal_strength_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_set_battery_level),     (mp_obj_t)&lora_set_battery_level_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_nvram_save),            (mp_obj_t)&lora_nvram_save_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_nvram_restore),         (mp_obj_t)&lora_nvram_restore_obj },
@@ -2782,3 +2792,4 @@ static int lora_socket_sendto(struct _mod_network_socket_obj_t *s, const byte *b
     *_errno = MP_EOPNOTSUPP;
     return -1;
 }
+
