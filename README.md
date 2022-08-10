@@ -1,3 +1,8 @@
+Function name for accessing RSSI:
+signal_strength()
+Found in ./esp32/mods/modlora.c
+Returns signal strength on current channel. Can be called as often as every 0.0005 seconds.
+
 The MicroPython project
 =======================
 <p align="center">
